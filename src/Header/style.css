@@ -1,0 +1,11 @@
+.Header{
+  text-align: center;
+}
+.Header h1{
+  font-size: 1.5rem;
+}
+.Header img{
+  width: 26rem;
+  max-width: 90%;
+  margin: 6rem 0 2rem;
+}

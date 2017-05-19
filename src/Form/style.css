@@ -1,0 +1,11 @@
+.Form{
+  margin: 3rem auto;
+  width: 400px;
+  max-width: 90%;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+.Form .footer{
+  text-align: center;
+}
