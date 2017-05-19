@@ -1,0 +1,16 @@
+.Result{
+  margin: 3rem auto;
+  width: 600px;
+  max-width: 90%;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.Result span.email{
+  background: #5b23ae;
+  padding: 10px 15px;
+  color: white;
+  border-radius: 10px;
+  display: inline-block;
+  margin: 0 10px 10px 0;
+}

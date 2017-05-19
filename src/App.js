@@ -14,6 +14,7 @@ class App extends Component {
   }
 
   handleSearch (payload) {
+    this.setState({})
     return axios.post(`${API_URL}/search`, payload)
     .then(({ data }) =>
       this.waitForSearchResults(data._id)
@@ -25,17 +26,17 @@ class App extends Component {
 
   waitForSearchResults (_id) {
     return new Promise((resolve, reject) => {
-      this.checkSearchResult(_id, resolve, reject)
+      this.checkSearchProgress(_id, resolve, reject)
     })
   }
 
-  checkSearchResult (_id, resolve, reject) {
+  checkSearchProgress (_id, resolve, reject) {
     axios.get(`${API_URL}/search/${_id}`)
     .then(({ data }) => {
       if (data.status === 'finished') {
         return resolve(data)
       } else {
-        return setTimeout(() => this.checkSearchResult(_id, resolve), 800)
+        return setTimeout(() => this.checkSearchProgress(_id, resolve), 800)
       }
     })
     .catch(reject)
