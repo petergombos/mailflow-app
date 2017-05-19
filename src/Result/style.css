@@ -6,7 +6,7 @@
   text-align: center;
 }
 
-.Result span.email{
+.Result span.email, .Result .error{
   background: #5b23ae;
   padding: 10px 15px;
   color: white;

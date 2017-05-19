@@ -6,13 +6,19 @@ const Result = ({ data }) => {
   return (
     <div className='Result'>
       {data.error &&
-        <div className='error'>{data.error}</div>
+        <div>
+          <h2>Woopsy, sorry about that, lets try an other one!</h2>
+          <div className='error'>{data.error}</div>
+        </div>
       }
       {!data.error && !data.emails.length &&
-        <div className='error'>Could not find email address for this person.</div>
+        <div>
+          <h2>Woopsy, sorry about that</h2>
+          <div className='error'>Could not find email address for this person.</div>
+        </div>
       }
       {!!data.emails.length &&
-        <h2>Here is what we found for<br />
+        <h2>Good news, here is what we found for<br />
           <span>{data.name}</span> on <span>{data.domain}</span>
         </h2>
       }
