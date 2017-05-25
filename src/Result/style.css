@@ -4,6 +4,10 @@
   max-width: 90%;
   box-sizing: border-box;
   text-align: center;
+  background: #e8e8e8;
+  border-radius: 8px;
+  padding: 0px 15px 15px;
+  overflow: auto;
 }
 
 .Result span.email, .Result .error{

@@ -6,14 +6,17 @@ import './style.css'
 class Form extends Component {
   constructor (props) {
     super(props)
-    this.state = {
-      name: '',
-      domain: '',
-      valid: false
-    }
+    this.state = this.defaultState
 
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleFormSubmit = this.handleFormSubmit.bind(this)
+  }
+
+  defaultState = {
+    name: '',
+    domain: '',
+    valid: false,
+    submitting: false
   }
 
   handleInputChange (e) {
@@ -53,9 +56,7 @@ class Form extends Component {
     })
     this.props.onSubmit(this.state)
       .then(() => {
-        this.setState({
-          submitting: false
-        })
+        this.setState(this.defaultState)
         this.refs.form.reset()
       })
   }
@@ -70,7 +71,12 @@ class Form extends Component {
         <input id='domain' type='text' placeholder='spacex.com' onChange={this.handleInputChange} />
         <p className='hint'>The primary domain of the company.</p>
         <div className='footer'>
-          <button type='submit' disabled={!this.state.valid || this.state.submitting}>Find Email</button>
+          <button type='submit' disabled={!this.state.valid || this.state.submitting}>
+            {this.state.submitting
+              ? ('Searching...')
+              : ('Find Email')
+            }
+          </button>
         </div>
       </form>
     )
@@ -78,7 +84,7 @@ class Form extends Component {
 }
 
 Form.propTypes = {
-  onSubmit: PropTypes.func.isRequied
+  onSubmit: PropTypes.func.isRequired
 }
 
 export default Form

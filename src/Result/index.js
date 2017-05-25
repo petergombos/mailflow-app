@@ -18,7 +18,7 @@ const Result = ({ data }) => {
         </div>
       }
       {!!data.emails.length &&
-        <h2>Good news, here is what we found for<br />
+        <h2>Here is what we found for<br />
           <span>{data.name}</span> on <span>{data.domain}</span>
         </h2>
       }
@@ -32,7 +32,7 @@ const Result = ({ data }) => {
 }
 
 Result.propTypes = {
-  data: PropTypes.object.isRequied
+  data: PropTypes.object.isRequired
 }
 
 export default Result

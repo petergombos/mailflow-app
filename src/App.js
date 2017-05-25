@@ -9,18 +9,24 @@ const API_URL = 'https://api.mailflow.io'
 class App extends Component {
   constructor (props) {
     super(props)
-    this.state = {}
+    this.state = this.defaultState
     this.handleSearch = this.handleSearch.bind(this)
   }
 
+  defaultState = {
+    result: {}
+  }
+
   handleSearch (payload) {
-    this.setState({})
+    this.setState(this.defaultState)
     return axios.post(`${API_URL}/search`, payload)
     .then(({ data }) =>
       this.waitForSearchResults(data._id)
     )
     .then(data => {
-      this.setState(data)
+      this.setState({
+        result: data
+      })
     })
   }
 
@@ -46,10 +52,10 @@ class App extends Component {
     return (
       <div>
         <Header />
-        <Form onSubmit={this.handleSearch} />
-        {this.state._id &&
-          <Result data={this.state} />
+        {this.state.result._id &&
+          <Result data={this.state.result} />
         }
+        <Form onSubmit={this.handleSearch} />
       </div>
     )
   }
