@@ -7,13 +7,13 @@ const Result = ({ data }) => {
     <div className='Result'>
       {data.error &&
         <div>
-          <h2>Woopsy, sorry about that, lets try an other one!</h2>
+          <h2>Woopsy, sorry about that!</h2>
           <div className='error'>{data.error}</div>
         </div>
       }
       {!data.error && !data.emails.length &&
         <div>
-          <h2>Woopsy, sorry about that</h2>
+          <h2>Woopsy, sorry about that!</h2>
           <div className='error'>Could not find email address for this person.</div>
         </div>
       }
