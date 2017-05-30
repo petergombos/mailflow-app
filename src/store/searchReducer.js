@@ -1,24 +1,4 @@
-import axios from 'axios'
-import { API_URL } from '../config'
-
-// API Helper Functions
-const checkSearchProgress = (_id, resolve, reject) => {
-  axios.get(`${API_URL}/search/${_id}`)
-  .then(({ data }) => {
-    if (data.status === 'finished') {
-      return resolve(data)
-    } else {
-      return setTimeout(() => checkSearchProgress(_id, resolve), 800)
-    }
-  })
-  .catch(reject)
-}
-
-const waitForSearchResults = (_id) => {
-  return new Promise((resolve, reject) => {
-    checkSearchProgress(_id, resolve, reject)
-  })
-}
+import { post, getSearchResult } from '../utils/api'
 
 // ACTION TYPES
 const SUBMIT_REQUEST = 'search/submit-request'
@@ -55,20 +35,19 @@ const initialSearchState = {
 
 export const searchSubmit = (payload) => (dispatch, store) => {
   dispatch(searchSubmitRequest())
-  return axios.post(`${API_URL}/search`, payload)
+  post('/search', payload)
   .then(({ data }) => {
     dispatch(searchSubmitSuccess({
       ...initialSearchState,
       ...data
     }))
-    return waitForSearchResults(data._id)
+    return getSearchResult(data._id)
   })
   .then(data =>
     dispatch(searchFetchSuccess(data))
   )
   .catch(err => {
-    console.log(err)
-    // dispatch(searchSubmitError(err))
+    dispatch(searchSubmitError(err))
   })
 }
 
@@ -76,7 +55,7 @@ export const searchSubmit = (payload) => (dispatch, store) => {
 const initialState = {
   isSubmitting: false,
   searches: [],
-  error: {}
+  error: ''
 }
 
 // REDUCER
@@ -88,13 +67,19 @@ const search = (state = initialState, action) => {
         isSubmitting: true,
         searches: state.searches
       }
+    case SUBMIT_ERROR:
+      return {
+        ...initialState,
+        isSubmitting: false,
+        error: action.payload
+      }
     case SUBMIT_SUCCESS:
       return {
         ...initialState,
         isSubmitting: false,
         searches: [
-          action.payload,
-          ...state.searches
+          ...state.searches,
+          action.payload
         ]
       }
     case FETCH_SUCCESS:
