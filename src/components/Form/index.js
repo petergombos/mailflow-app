@@ -15,8 +15,7 @@ class Form extends Component {
   defaultState = {
     name: '',
     domain: '',
-    valid: false,
-    submitting: false
+    valid: false
   }
 
   handleInputChange (e) {
@@ -51,14 +50,9 @@ class Form extends Component {
 
   handleFormSubmit (e) {
     e.preventDefault()
-    this.setState({
-      submitting: true
-    })
     this.props.onSubmit(this.state)
-      .then(() => {
-        this.setState(this.defaultState)
-        this.refs.form.reset()
-      })
+    this.setState(this.defaultState)
+    this.refs.form.reset()
   }
 
   render () {
@@ -71,8 +65,8 @@ class Form extends Component {
         <input id='domain' type='text' placeholder='spacex.com' onChange={this.handleInputChange} />
         <p className='hint'>The primary domain of the company.</p>
         <div className='footer'>
-          <button type='submit' disabled={!this.state.valid || this.state.submitting}>
-            {this.state.submitting
+          <button type='submit' disabled={!this.state.valid || this.props.submitting}>
+            {this.props.submitting
               ? ('Searching...')
               : ('Find Email')
             }
@@ -84,7 +78,8 @@ class Form extends Component {
 }
 
 Form.propTypes = {
-  onSubmit: PropTypes.func.isRequired
+  onSubmit: PropTypes.func.isRequired,
+  submitting: PropTypes.bool
 }
 
 export default Form

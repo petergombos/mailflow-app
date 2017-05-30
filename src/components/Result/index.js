@@ -5,13 +5,18 @@ import './style.css'
 const Result = ({ data }) => {
   return (
     <div className='Result'>
+      {data.isFetching &&
+        <h2>Searching email for:<br />
+          <span>{data.name}</span> on <span>{data.domain}</span>
+        </h2>
+      }
       {data.error &&
         <div>
           <h2>Woopsy, sorry about that!</h2>
           <div className='error'>{data.error}</div>
         </div>
       }
-      {!data.error && !data.emails.length &&
+      {!data.error && !data.emails.length && !data.isFetching &&
         <div>
           <h2>Woopsy, sorry about that!</h2>
           <div className='error'>Could not find email address for this person.</div>
